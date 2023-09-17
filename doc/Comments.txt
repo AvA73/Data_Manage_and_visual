@@ -1,0 +1,15 @@
+There is an organized structure with all required folders. Some subfolders are empty and may be removed. 
+
+It would be better if there is a code chunk in the qmd file to specify the path variables for each folder like the example we saw in class. 
+
+Almost all code has been adjusted to align with the tidyverse style, some code in question 3 and 5 forgot to leave the blank space before the code. The code added follows the tidyverse style, some code in question 3 and 5 forgot to leave the blank space before the code. 
+
+The comments included are clear and align with the best practices. It is clear which file should be run to compile the project and it compiles correctly.
+
+You need to make sure there are spaces around the = for assigning values to function arguments on lines 191, 256, and 257, as well as surrounding binary operators on lines 260, 263, and 336 and after commas on lines 260, 263, and 336.
+
+The name of argument popP (line 395) does not follow the style. You could replace it with pop_prop.
+
+Additionally, you may consider including some extra spaces to align operators and expressions on lines 111-113, and similar blocks.
+
+For the answers, you may consider to programmatically include the values, using `r expression` instead of typing in the numbers in text. So, for example, you could write The CBR for the world between 1950 and 1955 as `r world_cbr`.
