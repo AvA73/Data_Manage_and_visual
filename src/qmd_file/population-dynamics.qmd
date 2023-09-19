@@ -56,11 +56,18 @@ Population Division (2013). *World Population Prospects: The 2012 Revision, DVD 
 ```{r Preparing before Question, results='hide'}
 # Load packages ----
 library(tidyverse)
-
+library(stats) 
+library(rprojroot) 
+library(here) 
+file_path <- here::here()  
+qmd_path <- file.path(file_path, 'src')
+data_path <- file.path(file_path, "data")
+doc_path <- file.path(file_path, "doc")
 # Read data ----
-world_data  <- readr::read_csv("../../data/raw_data/World.csv")
-kenya_data  <- readr::read_csv("../../data/raw_data/Kenya.csv")
-sweden_data <- readr::read_csv("../../data/raw_data/Sweden.csv")
+world_data <- read.csv(file = file.path(data_path, "raw_data", "World.csv"))
+kenya_data <- read.csv(file = file.path(data_path, "raw_data", "Kenya.csv"))
+sweden_data <- read.csv(file = file.path(data_path, "raw_data", "Sweden.csv"))
+
 ```
 
 <!-- The `read_csv` function from the package `readr` -->

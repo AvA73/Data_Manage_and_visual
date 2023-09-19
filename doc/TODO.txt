@@ -1,5 +1,5 @@
-1. Remove unnecessary folders
-2. Code chunk to set up path variables
+1. Remove unnecessary folders☑️
+2. Code chunk to set up path variables☑️
 3. Some codes in Q3 and Q5 need to leave the blank space before the code
    (a) On lines 191, 256, 257
    (b) also in 260, 263, 336 (surrounding binary operators and after commas)
