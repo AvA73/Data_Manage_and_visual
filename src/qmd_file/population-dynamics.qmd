@@ -195,7 +195,7 @@ compute_asfr <- function (population_data) {
   population_data %>%
   mutate(start_age = as.numeric(str_extract(age, "^\\d+"))) %>%
   filter(start_age >= 15, start_age < 50) %>%
-  mutate(asfr=births / py.women)
+  mutate(asfr = births / py.women)
 }
 
 # Compute ASFR for each data set
@@ -260,14 +260,14 @@ Below is the solution for computing the total change of women and birth:
 # Compute totals of women and births in the world by period
 totals_world <- world_data %>% 
                 group_by(period) %>% 
-                summarise(total_women=sum(py.women), 
-                          total_births=sum(births))
+                summarise(total_women = sum(py.women), 
+                          total_births = sum(births))
 
 # Compare how much totals have changed
-changes_totals <- totals_world[2,-1]/totals_world[1,-1]
+changes_totals <- totals_world[2, -1] / totals_world[1, -1]
 changes_totals
 # Compare what percentage do totals change
-changes_totals_percent <- ((totals_world[2,-1] - totals_world[1,-1])/totals_world[1,-1])*100
+changes_totals_percent <- ((totals_world[2, -1] - totals_world[1, -1]) / totals_world[1, -1])*100
 changes_totals_percent
 
 ```
@@ -340,7 +340,7 @@ compute_asdr <- function (population_data) {
   population_data %>% 
   mutate(period_time = as.numeric(str_extract(period, "^\\d+"))) %>%
   filter(period_time >= 2005) %>%
-  mutate(asdr=deaths/py)
+  mutate(asdr = deaths/py)
 }
 
 # Compute ASDR for each data set
