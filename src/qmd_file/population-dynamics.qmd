@@ -145,18 +145,16 @@ compute_cbr <- function (population_data) {
 }
 
 # Compute the CBR for each data set
-world_cbr <- compute_cbr(world_data)
-world_cbr
-kenya_cbr <- compute_cbr(kenya_data)
-kenya_cbr
-sweden_cbr <- compute_cbr(sweden_data)
-sweden_cbr
+(world_cbr <- compute_cbr(world_data))
+
+(kenya_cbr <- compute_cbr(kenya_data))
+(sweden_cbr <- compute_cbr(sweden_data))
 
 ```
 
-The CBR for the World will be: 0.03732863 in 1950 - 1955 and 0.02021593 in 2005 - 2010  
-The CBR for the Kenya will be: 0.05209490 in 1950 - 1955 and 0.03851507 in 2005 - 2010  
-The CBR for the Sweden will be: 0.01539614 in 1950 - 1955 and 0.01192554 in 2005 - 2010  
+The CBR for the World will be: `r world_cbr[1]` in 1950 - 1955 and `r world_cbr[2]` in 2005 - 2010  
+The CBR for the Kenya will be: `r kenya_cbr[1]` in 1950 - 1955 and `r kenya_cbr[2]` in 2005 - 2010  
+The CBR for the Sweden will be: `r sweden_cbr[1]` in 1950 - 1955 and `r sweden_cbr[2]` in 2005 - 2010  
 It looks like the CBRs in three conditions are all becoming smaller in 2005-2010 than 1950-1955. Sweden has the smallest CBR both before and after.
 
   
@@ -245,12 +243,9 @@ compute_tfr <- function (population_data) {
 }
 
 # Compute the TFR for each data set
-world_tfr  <- compute_tfr(world_data)
-world_tfr
-kenya_tfr  <- compute_tfr(kenya_data)
-kenya_tfr
-sweden_tfr <- compute_tfr(sweden_data)
-sweden_tfr
+(world_tfr  <- compute_tfr(world_data))
+(kenya_tfr  <- compute_tfr(kenya_data))
+(sweden_tfr <- compute_tfr(sweden_data))
 
 ```
 
@@ -264,16 +259,14 @@ totals_world <- world_data %>%
                           total_births = sum(births))
 
 # Compare how much totals have changed
-changes_totals <- totals_world[2, -1] / totals_world[1, -1]
-changes_totals
+(changes_totals <- totals_world[2, -1] / totals_world[1, -1])
 # Compare what percentage do totals change
-changes_totals_percent <- ((totals_world[2, -1] - totals_world[1, -1]) / totals_world[1, -1])*100
-changes_totals_percent
+(changes_totals_percent <- ((totals_world[2, -1] - totals_world[1, -1]) / totals_world[1, -1])*100)
 
 ```
-In general, totals of women in 2005-2010 has increased to around 2.5 times of what it was in 1950-1955, which is about 152.5% increase in data.
+In general, totals of women in 2005-2010 has increased to around `r changes_totals[1]` times of what it was in 1950-1955, which is about `r changes_totals_percent[1]`% increase in data.
 
-Totals of birth in 2005-2010 has increased to around 1.38 times of what it was in 1950-1955, which is about 37.98% increase in data.
+Totals of birth in 2005-2010 has increased to around `r changes_totals[2]` times of what it was in 1950-1955, which is about `r changes_totals_percent[2]`% increase in data.
 
 
 ## Question 4
@@ -388,7 +381,7 @@ One way to understand the difference in the CDR between Kenya
 compute_pop_prop <- function (pop_data) {
   pop_data %>% 
   group_by(period) %>%
-  mutate(popP = py / sum(py)) %>%
+  mutate(pop_period = py / sum(py)) %>%
   ungroup()
 }
 
@@ -399,7 +392,7 @@ sweden_data<- compute_pop_prop(sweden_data)
 
 # Compute Kenya CDR Kenya had Swede population distribution
 kenya_cdrresweden <- mutate(kenya_data,
-                     temp_cdr  = asdr * sweden_data$popP) %>%
+                     temp_cdr  = asdr * sweden_data$pop_period) %>%
                      group_by(period) %>%
                      summarise(cdrresweden = sum(temp_cdr))
 kenya_cdrresweden
