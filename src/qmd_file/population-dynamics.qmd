@@ -59,6 +59,7 @@ library(tidyverse)
 library(stats) 
 library(rprojroot) 
 library(here) 
+# Create file paths ----
 file_path <- here::here()  
 qmd_path <- file.path(file_path, 'src')
 data_path <- file.path(file_path, "data")
@@ -113,7 +114,7 @@ We begin by computing *crude birth rate* (CBR) for a given
 
 ```{r Creating total person years variables }
 # Create new variable for total person years
-# Add addinitional line in data set
+# Add additional line in data set
 
 world_data$py <- world_data$py.men + world_data$py.women
 kenya_data$py <- kenya_data$py.men + kenya_data$py.women
@@ -137,7 +138,7 @@ sweden_data$py <- sweden_data$py.men + sweden_data$py.women
 ```{r Computing the CBR for each data set}
 
 # Create the CBR function 
-compute_cbr <- function (population_data) {
+compute_cbr <- function(population_data) {
   population_data %>% 
   group_by(period) %>% 
   summarise(cbr = sum(births) / sum(py)) %>% 
@@ -146,7 +147,6 @@ compute_cbr <- function (population_data) {
 
 # Compute the CBR for each data set
 (world_cbr <- compute_cbr(world_data))
-
 (kenya_cbr <- compute_cbr(kenya_data))
 (sweden_cbr <- compute_cbr(sweden_data))
 
@@ -189,7 +189,7 @@ The CBR is easy to understand but contains both men and women
 ```{r Computing ASFR for each data set}
 
 # Create function to compute Age specific fertility rate (ASFR)
-compute_asfr <- function (population_data) {
+compute_asfr <- function(population_data) {
   population_data %>%
   mutate(start_age = as.numeric(str_extract(age, "^\\d+"))) %>%
   filter(start_age >= 15, start_age < 50) %>%
@@ -235,16 +235,16 @@ Using the ASFR, we can define the TFR as the average number of
 ```{r Computing TFRs for each data set}
 # Function to compute the total fertility rate (TFR)
 
-compute_tfr <- function (population_data) {
+compute_tfr <- function(population_data) {
   population_data %>% 
   group_by(period) %>% 
-  summarise(tfr=5 *sum(asfr)) %>% 
+  summarise(tfr = 5 * sum(asfr)) %>% 
   pull()
 }
 
 # Compute the TFR for each data set
-(world_tfr  <- compute_tfr(world_data))
-(kenya_tfr  <- compute_tfr(kenya_data))
+(world_tfr <- compute_tfr(world_data))
+(kenya_tfr <- compute_tfr(kenya_data))
 (sweden_tfr <- compute_tfr(sweden_data))
 
 ```
@@ -261,7 +261,7 @@ totals_world <- world_data %>%
 # Compare how much totals have changed
 (changes_totals <- totals_world[2, -1] / totals_world[1, -1])
 # Compare what percentage do totals change
-(changes_totals_percent <- ((totals_world[2, -1] - totals_world[1, -1]) / totals_world[1, -1])*100)
+(changes_totals_percent <- ((totals_world[2, -1] - totals_world[1, -1]) / totals_world[1, -1]) * 100)
 
 ```
 In general, totals of women in 2005-2010 has increased to around `r changes_totals[1]` times of what it was in 1950-1955, which is about `r changes_totals_percent[1]`% increase in data.
@@ -286,7 +286,7 @@ Next, we will examine another important demographic process:
 ### Answer 4
 ```{r Computing CDR for each data set}
 # Function to compute the Crude death rate (CDR)
-compute_cdr <- function (population_data) {
+compute_cdr <- function(population_data) {
   population_data %>% 
   group_by(period) %>% 
   summarise(cbr = sum(deaths) / sum(py)) %>% 
@@ -294,16 +294,13 @@ compute_cdr <- function (population_data) {
 }
 
 # Compute the CDR 
-world_cdr  <- compute_cdr(world_data)
-world_cdr
-kenya_cdr  <- compute_cdr(kenya_data)
-kenya_cdr
-sweden_cdr <- compute_cdr(sweden_data)
-sweden_cdr
+(world_cdr <- compute_cdr(world_data))
+(kenya_cdr <- compute_cdr(kenya_data))
+(sweden_cdr <- compute_cdr(sweden_data))
 
 ```
 
-All three regions are having a 2005-2010 death rate smaller than the one in 1950-1955. However, Sweden seems to have a least decrease in the death rate with only 0.00012 difference between the data. Among three regions, Kenya seems to have the largest death rate no matter in 1950-1955 or in 2005-2010. 
+All three regions are having a 2005-2010 death rate smaller than the one in 1950-1955. However, Sweden seems to have a least decrease in the death rate with only `r sweden_cbr[1] - sweden_cbr[2]` difference between the data. Among three regions, Kenya seems to have the largest death rate no matter in 1950-1955 or in 2005-2010. 
 
 
 ## Question 5
@@ -329,16 +326,16 @@ One puzzling finding from the previous question is that the CDR
 ### Answer 5
 ```{r Computing ASDR for each data set}
 # Function to compute Age specific death rate (ASDR)
-compute_asdr <- function (population_data) {
+compute_asdr <- function(population_data) {
   population_data %>% 
   mutate(period_time = as.numeric(str_extract(period, "^\\d+"))) %>%
   filter(period_time >= 2005) %>%
-  mutate(asdr = deaths/py)
+  mutate(asdr = deaths / py)
 }
 
 # Compute ASDR for each data set
-world_data  <- compute_asdr(world_data)
-kenya_data  <- compute_asdr(kenya_data)
+world_data <- compute_asdr(world_data)
+kenya_data <- compute_asdr(kenya_data)
 sweden_data <- compute_asdr(sweden_data)
 
 #Show the ASDR data
@@ -378,7 +375,7 @@ One way to understand the difference in the CDR between Kenya
 ### Answer 6
 ```{r Computing Kenyas CDR under Swede population condition}
 # Function to compute population proportion by period
-compute_pop_prop <- function (pop_data) {
+compute_pop_prop <- function(pop_data) {
   pop_data %>% 
   group_by(period) %>%
   mutate(pop_period = py / sum(py)) %>%
@@ -388,15 +385,14 @@ compute_pop_prop <- function (pop_data) {
 # Compute population proportion for each data set
 world_data <- compute_pop_prop(world_data)
 kenya_data <- compute_pop_prop(kenya_data)
-sweden_data<- compute_pop_prop(sweden_data)
+sweden_data <- compute_pop_prop(sweden_data)
 
 # Compute Kenya CDR Kenya had Swede population distribution
-kenya_cdrresweden <- mutate(kenya_data,
-                     temp_cdr  = asdr * sweden_data$pop_period) %>%
-                     group_by(period) %>%
-                     summarise(cdrresweden = sum(temp_cdr))
-kenya_cdrresweden
+(kenya_cdrresweden <- mutate(kenya_data,
+                      temp_cdr = asdr * sweden_data$pop_period) %>%
+                      group_by(period) %>%
+                      summarise(cdrresweden = sum(temp_cdr)))
 
 ```
 
-The counterfactual CDR is actually higher than the orignial CDR in Kenya in 2005-2010, meaning that given the same age distribution as Sweden, Kenya should have a higher CDR than the orignial one. Although the original CDR is lower than the conterfactual one, it is still higher than the Sweden original one. 
+The counterfactual CDR is actually higher than the orignal CDR in Kenya in 2005-2010, meaning that given the same age distribution as Sweden, Kenya should have a higher CDR than the orignal one. Although the original CDR is lower than the conterfactual one, it is still higher than the Sweden original one. 
