@@ -389,7 +389,7 @@ sweden_data <- compute_pop_prop(sweden_data)
 
 # Compute Kenya CDR Kenya had Swede population distribution
 (kenya_cdrresweden <- mutate(kenya_data,
-                      temp_cdr = asdr * sweden_data$pop_period) %>%
+                             temp_cdr = asdr * sweden_data$pop_period) %>%
                       group_by(period) %>%
                       summarise(cdrresweden = sum(temp_cdr)))
 
