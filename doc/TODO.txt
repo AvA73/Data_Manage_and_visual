@@ -4,5 +4,5 @@
    (a) On lines 191, 256, 257☑️
    (b) also in 260, 263, 336 (surrounding binary operators and after commas)☑️
 4. Line 395: name popP☑️
-5. Line 111-113 and similar blocks: Include extra spaces to align operators and expressions 
+5. Line 111-113 and similar blocks: Include extra spaces to align operators and expressions☑️
 6. Using 'r expression' instead of number☑️
